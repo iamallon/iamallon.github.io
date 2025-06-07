@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  font-family: "Atkinson Hyperlegible";
+  font-size: 12pt;
+}
+
+a, a:visited {
+  color: inherit;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-decoration: none;
+}
+
+h1 {
+  font-weight: normal;
+  margin-right: 1%;
+}
+
+nav {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.content {
+  margin: 7% 10% 10% 7%;
+}
+
+.brand {
+  padding: 5px 5px;
+  border: 1px solid black;
+}
