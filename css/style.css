@@ -21,6 +21,13 @@ time {
   margin-right: 1%;
 }
 
+footer {
+  position: fixed;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+
 .nav-bar {
   display: flex;
   flex-wrap: wrap;
@@ -42,10 +49,16 @@ time {
 }
 
 .content {
-  margin: 7% 10% 10% 7%;
+  margin: 7% 10% 0% 7%;
 }
 
 .contact {
   display: flex;
   flex-direction: column;
+}
+
+.spotlight {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1ch;
 }
