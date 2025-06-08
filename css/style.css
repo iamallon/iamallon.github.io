@@ -1,5 +1,10 @@
+html,
 body {
 	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	min-height: 100vh;
+	min-height: 100dvh;
 	font-family: "Atkinson Hyperlegible";
 	font-size: 1em;
 	color: #393d47;
@@ -10,7 +15,10 @@ a:visited {
 	color: inherit;
 	margin-top: auto;
 	margin-bottom: auto;
+	overflow: hidden;
+	white-space: nowrap;
 	text-decoration: none;
+	text-overflow: ellipsis;
 }
 
 a:hover {
@@ -21,11 +29,14 @@ time {
 	margin-right: 1%;
 }
 
+hr {
+	width: 100%;
+}
+
 footer {
-	position: fixed;
-	bottom: 10%;
-	left: 50%;
-	transform: translate(-50%, 0);
+	margin-top: auto;
+	margin-bottom: 10%;
+	text-align: center;
 }
 
 .nav-bar {
@@ -49,6 +60,8 @@ footer {
 }
 
 .content {
+	display: flex;
+	flex-direction: column;
 	margin: 7% 10% 0% 7%;
 }
 
