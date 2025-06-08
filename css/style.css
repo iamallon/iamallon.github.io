@@ -1,14 +1,20 @@
 body {
   margin: 0;
   font-family: "Atkinson Hyperlegible";
-  font-size: 12pt;
+  font-size: 1em;
+  color: #393d47;
 }
 
-a, a:visited {
+a,
+a:visited {
   color: inherit;
   margin-top: auto;
   margin-bottom: auto;
   text-decoration: none;
+}
+
+a:hover {
+  color: #000;
 }
 
 time {
@@ -17,6 +23,7 @@ time {
 
 .nav-bar {
   display: flex;
+  flex-wrap: wrap;
   justify-content: start;
   align-items: center;
 }
@@ -24,15 +31,18 @@ time {
 .nav-link {
   font-weight: normal;
   margin-right: 1%;
+  text-decoration: underline;
+}
+
+.nav-brand {
+  padding: 5px 5px;
+  border: 1px solid black;
+  font-weight: normal;
+  margin-right: 1%;
 }
 
 .content {
   margin: 7% 10% 10% 7%;
-}
-
-.brand {
-  padding: 5px 5px;
-  border: 1px solid black;
 }
 
 .contact {
