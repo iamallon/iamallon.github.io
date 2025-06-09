@@ -5,7 +5,7 @@ body {
 	height: 100%;
 	font-family: "Atkinson Hyperlegible";
 	font-size: 1em;
-	color: #393d47;
+	color: #4b5255;
 }
 
 a,
@@ -46,7 +46,6 @@ footer {
 .nav-link {
 	font-weight: normal;
 	margin-right: 1%;
-	text-decoration: underline;
 }
 
 .nav-brand {
@@ -61,6 +60,10 @@ footer {
 	flex-direction: column;
 	margin: 7% 10% 7% 7%;
 	height: 86%;
+}
+
+.link {
+	text-decoration: underline;
 }
 
 .contact {
