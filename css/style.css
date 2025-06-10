@@ -77,6 +77,11 @@ footer {
 	text-decoration: underline;
 }
 
+.fingerprint {
+	vertical-align: middle;
+	display: inline-block;
+}
+
 .contact {
 	display: flex;
 	flex-direction: column;
