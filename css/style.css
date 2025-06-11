@@ -16,7 +16,6 @@ body {
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
-	height: 100dvh;
 	margin: 0;
 	padding: 0;
 	font-family: "Atkinson Hyperlegible";
@@ -74,7 +73,6 @@ footer {
 	flex-direction: column;
 	margin: 7% 10% 0% 7%;
 	height: 100vh;
-	height: 100dvh;
 }
 
 .link {
