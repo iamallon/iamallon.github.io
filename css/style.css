@@ -13,9 +13,12 @@
 
 html,
 body {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	height: 100dvh;
 	margin: 0;
 	padding: 0;
-	height: 100%;
 	font-family: "Atkinson Hyperlegible";
 	font-size: 1em;
 	color: #4b5255;
@@ -69,8 +72,9 @@ footer {
 	animation: shuding 1.5s;
 	display: flex;
 	flex-direction: column;
-	margin: 7% 10% 7% 7%;
-	height: 86%;
+	margin: 7% 10% 0% 7%;
+	height: 100vh;
+	height: 100dvh;
 }
 
 .link {
