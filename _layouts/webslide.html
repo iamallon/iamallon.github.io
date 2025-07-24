@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+  {% include head.html style="css/webslides.css" %}
+  <body>
+    <main role="main">
+      <article id="webslides">
+        {{ content }}
+      </article>
+    </main>
+    <script src={{ "static/webslides.min.js" | relative_url }}></script>
+    <script>
+      window.ws = new WebSlides();
+    </script>
+  </body>
+</html>
