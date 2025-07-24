@@ -17,7 +17,6 @@
 	2. Typography & Lists
 		2.1 Headings with background
 		2.2 Classes: .text-
-		2.3 San Francisco Font (Apple)
 	3. Header & Footer
 		3.1 Logo
 	4. Navigation
@@ -794,7 +793,7 @@ body,
 input,
 select,
 textarea {
-  font-family: 'Roboto', 'San Francisco', helvetica, arial, sans-serif;
+  font-family: "Atkinson Hyperlegible";
   font-size: 62.5%; }
 
 body,
@@ -1240,37 +1239,6 @@ figure[class*='text-pull-'] {
   line-height: 2.4rem; }
 
 /*=========================================
-2.1. San Francisco Font (Apple's new font)
-=========================================== */
-.text-apple,
-.bg-apple {
-  font-family: 'San Francisco', helvetica, arial, sans-serif; }
-
-/* Ultra Light */
-@font-face {
-  font-family: 'San Francisco';
-  font-weight: 100;
-  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-ultralight-webfont.woff2"); }
-
-/* Thin */
-@font-face {
-  font-family: 'San Francisco';
-  font-weight: 200;
-  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-thin-webfont.woff2"); }
-
-/* Regular */
-@font-face {
-  font-family: 'San Francisco';
-  font-weight: 400;
-  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-regular-webfont.woff2"); }
-
-/* Bold */
-@font-face {
-  font-family: 'San Francisco';
-  font-weight: bold;
-  src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscodisplay-bold-webfont.woff2"); }
-
-/*=========================================
 3. Header & Footer
 =========================================== */
 /* -- If you want an unique, global header/footer,read this:
@@ -1652,7 +1620,6 @@ a#previous {
   #navigation {
     -webkit-animation: fadeIn 6s;
             animation: fadeIn 6s;
-    background: url("../images/swipe.svg") no-repeat center top;
     background-size: 4.8rem; }
   #navigation a,
   #counter {

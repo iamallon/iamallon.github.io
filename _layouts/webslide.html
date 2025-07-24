@@ -1,30 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" prefix="og: http://ogp.me/ns#">
-  <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Alexandru Loghin</title>
-  <link href={{ "css/webslides.css" | relative_url }} rel="stylesheet">
-  <link
-    href="https://fonts.cdnfonts.com/css/atkinson-hyperlegible"
-    rel="stylesheet"
-  >
-  <link href={{ "static/favicon.ico" | relative_url }} rel="icon">
-  </head>
+  {% include head.html style="css/webslides.css" %}
   <body>
-        <main role="main">
+    <main role="main">
       <article id="webslides">
-                <section>
-          <div class="wrap aligncenter">
-            <h1><strong>Create beautiful stories</strong></h1>
-            <p class="text-intro">WebSlides makes HTML presentations easy.<br>
-              Just the essentials and using lovely CSS.
-            </p>
-         </div>
-        </section>
-     </article>
+        {{ content }}
+      </article>
     </main>
-      <script src={{ "static/webslides.min.js" | relative_url }}></script>
+    <script src={{ "static/webslides.min.js" | relative_url }}></script>
     <script>
       window.ws = new WebSlides();
     </script>
