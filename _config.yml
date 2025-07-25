@@ -3,3 +3,5 @@ collections:
     output: true
   articles:
     output: true
+  slides:
+    output: true
