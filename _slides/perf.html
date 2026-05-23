@@ -16,79 +16,168 @@ layout: webslide
   </footer>
 </section>
 
+
 <section>
-  <div class="wrap">
-    <h1 class="text-landing">Perspectives & Methodology & Models</h1>
-    <h3 class="text-landing">Workload Analysis</h3>
-    <h3 class="text-landing">Resource Analysis</h3>
-    <h3 class="text-landing">Queueing Theory</h3>
+
+  <div class="wrap toc">
+    <h3>Table of Contents</h3>
+    <hr>
+    <ol>
+      <li>
+	<a href="#">Perspectives</a>
+	   <ol>
+	     <li>
+	       <p>Workload Analysis</p>
+	     </li>
+	     <li>
+	       <p>Resource Analysis</p>
+	     </li>
+	   </ol>
+      </li>
+      <li>
+	<a href="#">Methodologies</a>
+	<ol>
+	  <li>
+	    <p>Streetlight Anti-Method</p>
+	  </li>
+	  <li>
+	    <p>USE Method</p>
+	  </li>
+	  <li>
+	    <p>RED Method</p>
+	  </li>
+	</ol>
+      </li>
+      <li>
+	<a href="#">Concepts</a>
+	<ol>
+	  <li>
+	    <p>Observer Effect</p>
+	  </li>
+	  <li>
+	    <p>Queueing Theory</p>
+	  </li>
+	</ol>
+      </li>
+      <li>
+	<a href="#"> Observability</a>
+	<ol>
+	  <li>
+	    <p> PMCs (Performance Monitoring Counters)</p>
+	  </li>
+	  <li>
+	    <p>Profiling</p>
+	  </li>
+	  <li>
+	    <p>Tracing</p>
+	  </li>
+	</ol>
+      </li>
+      <li>
+	<a href="#">Tools</a>
+	<ol>
+	  <li>
+	    <p>Linux Perf Tools</p>
+	  </li>
+	  <li>
+	    <p>.NET Perf Tools</p>
+	  </li>
+	  <li>
+	    <p>Flamegraphs</p>
+	  </li>
+	</ol>
+      </li>
+      <li>
+	<a href="#">Virtualization</a>
+	<ol>
+	  <li>
+	    <p>Hardware Virtualization</p>
+	  </li>
+	  <li>
+	    <p>OS Virtualization</p>
+	  </li>
+	</ol>
+      </li>
+      <li>
+	<a href="#">Takeaways</a>
+      </li>
+    </ol>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h1 class="text-landing">Streetlight Anti-Method</h1>
+    <h1 class="text-landing">1. Perspectives</h1>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h1 class="text-landing">USE Method</h1> 
+    <h1 class="text-landing">Load vs. Architecture Issue?</h1>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h1 class="text-landing">RED Method</h1> 
+    <img alt="linux_perf_tools" class="aligncenter size-60" src="https://www.brendangregg.com/Perf/linux_observability_tools.png">
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h1 class="text-landing">Observability</h1>
-    <h3 class="text-landing">PMC(Performance Monitoring Counters)</h3>
-    <h3 class="text-landing">Profiling</h3>
-    <h3 class="text-landing">Tracing</h3>
+    <h1 class="text-landing">1.1 Workload Analysis</h1>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h1 class="text-landing">Tools</h1>
-    <h3 class="text-landing">Linux Perf Tools</h3>
-    <h3 class="text-landing">.Net Perf Tools</h3>
+    <h1 class="text-landing aligncenter">Starting Point: Application Layer</h1>
+  </div>
+</section>
+
+<section>
+  <div class="grid">
+    <div class="column">
+      <h6>Requests</h6>
+      <p>Workload applied to the application. This is the gauge that tells if you are trying to handle an unresonable ammount of work all at the same time. Even more, doing a <b>workload characterization</b> can uncover some unbalances in how that workload is distributed.</p>
+    </div>
+    <div class="column">
+      <h6>Latency</h6>
+      <p>The time it took the application to execute the work.
+       Arguably the most important metric for an applications performance and it needs to be <b>very well defined</b>. As an example, for a database engine it can refer to the <b>query latency</b> or <b>connection latency</b>.</p> Another mandatory mention here is <b>throughput</b>, as the sister opposite metric.
+    </div>
+    <div class="column">
+      <h6>Completion</h6>
+      <p>Determines if the system had any errors during the workload. If there is a <b>fail-fast path</b> and the system experienced some errors that converged in that said path the results of the analysis will be very good or very bad, depending on the retry mechanism or other factors.</p>
+    </div>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h1 class="text-landing">Hardware Virtualization</h1>
-    <h1 class=text-landing>OS Vritualization</h1>
-  </div class="wrap">
-</section>
-
-<section>
-  <div class="wrap">
-    <h1 class="text-landing">Statistics</h1>
-    <h3 class="text-landing">Mean</h3>
-    <h3 class="text-landing">Median</h3>
-    <h3 class="text-landing">Percentile</h3>
-    <h3 class="text-landing">Outliers</h3>
-    <h3 class="text-landing">Distributions (Multimodal)</h3>
+    <h1 class="text-landing">1.2 Resource Analysis</h1>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h1 class="text-landing">Visualizations</h1>
-    <h3 class="text-landing">Line Graph</h3>
-    <h3 class="text-landing">Flamegraph</h3>
+    <h1 class="text-landing aligncenter">Starting Point: Hardware Layer</h1>
   </div>
 </section>
 
 <section>
-  <div class="wrap">
-    <h1 class="text-landing">Takeaways</h1>
-    <h3 class="text-landing">See Chapter "Performance Mantras"</h3>
+  <div class="grid">
+    <div class="column">
+      <h6>Utilization</h6>
+      <p>Very common metric that that indicates a potential issue with a resource that is about to reach it's limit.</p>
+    </div>
+    <div class="column">
+      <h6>Saturation</h6>
+      <p>Complementary metric or indicator of utilization that tells if the <b>resource is under heavy load</b>, more than it can handle.</p>
+    </div>
+    <div class="column">
+      <h6>Capacity (Planning)</h6>
+      <p>Provisioning and scaling policies are alwasy hard to get right. Resource analysis should help with decisions regarding this.</p>
+    </div>
   </div>
 </section>
