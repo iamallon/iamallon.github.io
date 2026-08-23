@@ -72,6 +72,9 @@ layout: webslide
 	  <li>
 	    <p>Tracing</p>
 	  </li>
+	  <li>
+	    <p>Monitoring</p>
+	  </li>
 	</ol>
       </li>
       <li>
@@ -113,7 +116,7 @@ layout: webslide
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap aligncenter">
     <h1 class="text-landing">Load vs. Architecture Issue?</h1>
   </div>
 </section>
@@ -131,7 +134,7 @@ layout: webslide
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap aligncenter">
     <h1 class="text-landing aligncenter">Starting Point: Application Layer</h1>
   </div>
 </section>
@@ -162,7 +165,7 @@ layout: webslide
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap aligncenter">
     <h1 class="text-landing aligncenter">Starting Point: Hardware Layer</h1>
   </div>
 </section>
@@ -240,7 +243,7 @@ layout: webslide
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap aligncenter">
     <h1 class="text-landing">Utilization</h1>
   </div>
 </section>
@@ -262,7 +265,7 @@ layout: webslide
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap aligncenter">
     <h1 class="text-landing">Saturation</h1>
   </div>
 </section>
@@ -274,16 +277,16 @@ layout: webslide
 	Saturation begins to occur at 100% utilization (capacity-based), as extra work cannot be processed and begins to <b>queue</b>.
       </p>
       <p>
-      <cite>
-	Systems Performance: Enterprise and the Cloud, 2nd Edition by Brendan Gregg
-      </cite>
+	<cite>
+	  Systems Performance: Enterprise and the Cloud, 2nd Edition by Brendan Gregg
+	</cite>
     </p>
     </blockquote>
   </div>
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap aligncenter">
     <h1 class="text-landing">Errors</h1>
   </div>
 </section>
@@ -295,19 +298,19 @@ layout: webslide
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap aligncenter">
     <h1 class="text-landing">Request Rate</h1>
   </div>
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap aligncenter">
     <h1 class="text-landing">Errors</h1>
   </div>
 </section>
 
 <section>
-  <div class="wrap">
+  <div class="wrap aligncenter">
     <h1 class="text-landing">Duration</h1>
   </div>
 </section>
@@ -337,5 +340,80 @@ layout: webslide
 <section>
   <div class="wrap">
     <h1 class="text-landing">3.2 Queueing Theory</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <blockquote class="text-quote">
+      <p>
+	Many components in computing, both software and hardware, can be modeled as <b>queueing systems</b>.
+      </p>
+      <p>
+	<cite>
+	  Systems Performance: Enterprise and the Cloud, 2nd Edition by Brendan Gregg
+	</cite>
+    </p>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">4. Observability</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">4.1 PMCs (Performance Monitoring Counters)</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <h1 class="text-landing">Hardware Counters</h1>
+  </div>
+  <hr>
+  <ul class="flexblock specs">
+    <li>
+      <div class="content-center">
+	<a href="https://perfmon-events.intel.com/platforms/arrowlake/core-events/p-core/">Intel PMCs</a>
+      </div>
+    </li>
+    <li>
+      <div class="content-center">
+	<a href="https://docs.amd.com/r/en-US/57368-uProf-user-guide/1.2.1.-Performance-Monitor-Counters-PMC">AMD PMCs</a>
+      </div>
+    </li>
+    <li>
+      <div class="content-center">
+	<a href="https://support.arm.com/documentation/101430/0102/Debug-descriptions/Performance-Monitoring-Unit/PMU-events">ARM PMUs</a>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <h1 class="text-landing">Software Counters</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">4.2 Profiling</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">4.3 Tracing</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">4.4 Monitoring</h1>
   </div>
 </section>
