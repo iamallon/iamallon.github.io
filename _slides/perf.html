@@ -425,12 +425,179 @@ layout: webslide
 </section>
 
 <section>
-  <div class="card-50">
-      <figure class="browser">
-	<img alt="Screenshot" src="https://upload.wikimedia.org/wikipedia/commons/a/a8/AMDGPU_boot_log_screenshot.png?utm_source=en.wikipedia.org&utm_campaign=imageinfo&utm_content=original">
-      </figure>
-    <div class="flex-content">
-      <h1 class="aligncenter">dmesg</h1>
+  <div class="wrap">
+    <h1 class="text-landing">5.1 Linux Perf Tools</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# dmesg -T -l err
+[Sat Sep  5 11:39:02 2026] amd_pstate: min_freq(0) or max_freq(0) or nominal_freq(0) value is incorrect
+[Sat Sep  5 11:39:02 2026] amd_pstate: failed to register with return -19
+[Sat Sep  5 11:39:04 2026] ata6.00: supports DRM functions and may not be fully accessible
+[Sat Sep  5 11:39:04 2026] ata6.00: supports DRM functions and may not be fully accessible
+[Sat Sep  5 11:39:10 2026] ACPI Warning: SystemIO range 0x0000000000000B00-0x0000000000000B08 conflicts with OpRegion 0x0000000000000B00-0x0000000000000B0F (\GSA1.SMBI) (20250807/utaddress-204)
+[Sat Sep  5 11:39:12 2026] faux_driver regulatory: Direct firmware load for regulatory.db failed with error -2
+      </pre>
     </div>
+    <div class="column aligncenter">
+      <h1>dmesg</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# vmstat -SM 1
+procs -----------memory---------- ---swap-- -----io---- -system-- -------cpu-------
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st gu
+ 2  0      0  25633     95   2079    0    0  1257   666 10350   5  2  1 97  0  0  0
+ 0  0      0  25636     95   2079    0    0     0     0 6222 5891  0  0 99  0  0  0
+ 0  0      0  25636     95   2079    0    0     0    40 5761 5716  0  0 99  0  0  0
+ 0  0      0  25644     95   2079    0    0     0     0 6786 5737  2  0 97  0  0  0
+ 2  0      0  25645     95   2079    0    0     0     0 5646 5342  0  0 99  0  0  0
+ 0  0      0  25643     95   2079    0    0     0     0 8032 8308  0  1 99  0  0  0
+ 0  0      0  25620     95   2079    0    0     0     0 9512 10461 2  1 98  0  0  0
+ 0  0      0  25619     95   2078    0    0     0     0 7185 7416  1  1 99  0  0  0
+ 0  0      0  25621     95   2079    0    0     0     0 6390 5492  2  0 97  0  0  0
+ 0  0      0  25620     95   2079    0    0     0     0 5134 5040  0  0 99  0  0  0
+ 0  0      0  25620     95   2079    0    0     0     0 5912 5768  0  0 99  0  0  0
+ 0  0      0  25621     95   2079    0    0     0     0 5489 5257  0  0 99  0  0  0
+      </pre>
+    </div>
+    <div class="column aligncenter">
+      <h1>vmstat</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# iostat -sx 1
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.42    0.00    0.79    0.02    0.00   97.77
+
+Device             tps      kB/s    rqm/s   await  areq-sz  aqu-sz  %util
+nvme0n1          29.21   1403.97    18.14    0.58    48.06    0.02   0.57
+sda               0.61     11.28     1.72    1.06    18.48    0.00   0.01
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.62    0.00    0.54    0.04    0.00   98.79
+
+Device             tps      kB/s    rqm/s   await  areq-sz  aqu-sz  %util
+nvme0n1          26.00    228.00    18.00    0.58     8.77    0.02   0.90
+sda               0.00      0.00     0.00    0.00     0.00    0.00   0.00
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.84    0.00    1.13    0.00    0.00   98.04
+
+Device             tps      kB/s    rqm/s   await  areq-sz  aqu-sz  %util
+nvme0n1          23.00    376.00    18.00    0.87    16.35    0.02   1.00
+sda               0.00      0.00     0.00    0.00     0.00    0.00   0.00
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           3.30    0.00    1.25    0.04    0.00   95.41
+
+Device             tps      kB/s    rqm/s   await  areq-sz  aqu-sz  %util
+nvme0n1          11.00    116.00    17.00    1.09    10.55    0.01   0.80
+sda               0.00      0.00     0.00    0.00     0.00    0.00   0.00
+      </pre>
+    </div>
+    <div class="column aligncenter">
+      <h1>iostat</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# pidstat 1
+12:09:55 PM   UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+12:09:56 PM  1000      1068    0.00    0.99    0.00    0.00    0.99    23  sway
+12:09:56 PM  1000      1207    2.97    0.99    0.00    0.00    3.96    16  firefox-wayland
+12:09:56 PM  1000      1416    0.99    0.00    0.00    0.00    0.99    18  Privileged Cont
+12:09:56 PM  1000      1538    0.99    0.00    0.00    0.00    0.99    18  Utility Process
+12:09:56 PM  1000      1555    0.99    0.00    0.00    0.00    0.99    22  Isolated Web Co
+12:09:56 PM  1000      1567    2.97    1.98    0.00    0.00    4.95    17  Isolated Web Co
+
+12:09:56 PM   UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+12:09:57 PM     0       618    0.00    1.00    0.00    0.00    1.00     6  kworker/6:3-events
+12:09:57 PM  1000      1068    0.00    1.00    0.00    0.00    1.00    23  sway
+12:09:57 PM  1000      1121    0.00    1.00    0.00    0.00    1.00    21  foot
+12:09:57 PM  1000      1207    1.00    1.00    0.00    0.00    2.00    16  firefox-wayland
+12:09:57 PM  1000      1416    0.00    1.00    0.00    0.00    1.00    18  Privileged Cont
+12:09:57 PM  1000      1538    1.00    1.00    0.00    0.00    2.00    18  Utility Process
+12:09:57 PM  1000      1567    2.00    1.00    0.00    0.00    3.00    17  Isolated Web Co
+12:09:57 PM  1000      3434    1.00    1.00    0.00    0.00    2.00     4  pulseaudio
+12:09:57 PM  1000     23268    1.00    0.00    0.00    0.00    1.00     0  Isolated Web Co
+12:09:57 PM  1000     26975    0.00    1.00    0.00    0.00    1.00     3  pidstat
+
+12:09:57 PM   UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+12:09:58 PM  1000      1068    1.00    0.00    0.00    0.00    1.00    23  sway
+12:09:58 PM  1000      1121    0.00    2.00    0.00    0.00    2.00    21  foot
+12:09:58 PM  1000      1207    0.00    1.00    0.00    0.00    1.00    16  firefox-wayland
+12:09:58 PM  1000      1538    1.00    0.00    0.00    0.00    1.00    18  Utility Process
+12:09:58 PM  1000      1567    4.00    2.00    0.00    0.00    6.00    17  Isolated Web Co
+12:09:58 PM  1000      3439    1.00    0.00    0.00    0.00    1.00     8  Isolated Web Co
+12:09:58 PM  1000     11190    1.00    0.00    0.00    0.00    1.00     8  Isolated Web Co
+12:09:58 PM  1000     26975    1.00    2.00    0.00    0.00    3.00     3  pidstat
+      </pre>
+    </div>
+    <div class="column aligncenter">
+      <h1>pidstat</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# perf trace pwd
+? (         ): pwd/30793  ... [continued]: execve())                                           = 0
+0.028 ( 0.002 ms): pwd/30793 brk()                                                                 = 0x556b6ea1d000
+0.049 ( 0.003 ms): pwd/30793 access(filename: 0xcb639390, mode: R)                                 = -1 ENOENT (No such file or directory)
+0.057 ( 0.004 ms): pwd/30793 openat(dfd: CWD, filename: 0xcb638134, flags: RDONLY|CLOEXEC)         = 3
+0.063 ( 0.002 ms): pwd/30793 fstat(fd: 3, statbuf: 0x7ffc31877770)                                 = 0
+0.066 ( 0.005 ms): pwd/30793 mmap(len: 40123, prot: READ, flags: PRIVATE, fd: 3)                   = 0x7fb9cb5fc000
+0.073 ( 0.002 ms): pwd/30793 close(fd: 3)                                                          = 0
+0.082 ( 0.003 ms): pwd/30793 openat(dfd: CWD, filename: 0xcb644fb0, flags: RDONLY|CLOEXEC)         = 3
+0.087 ( 0.002 ms): pwd/30793 read(fd: 3, buf: 0x7ffc318778d8, count: 832)                          = 832
+0.091 ( 0.002 ms): pwd/30793 pread64(fd: 3, buf: 0x7ffc318774d0, count: 784, pos: 64)              = 784
+0.094 ( 0.002 ms): pwd/30793 fstat(fd: 3, statbuf: 0x7ffc31877770)                                 = 0
+0.098 ( 0.004 ms): pwd/30793 mmap(len: 8192, prot: READ|WRITE, flags: PRIVATE|ANONYMOUS)           = 0x7fb9cb5fa000
+0.106 ( 0.002 ms): pwd/30793 pread64(fd: 3, buf: 0x7ffc318773c0, count: 784, pos: 64)              = 784
+0.110 ( 0.005 ms): pwd/30793 mmap(len: 2006680, prot: READ, flags: PRIVATE|DENYWRITE, fd: 3)       = 0x7fb9cb410000
+0.116 ( 0.010 ms): pwd/30793 mmap(addr: 0x7fb9cb438000, len: 1413120, prot: READ|EXEC, flags: PRIVATE|FIXED|DENYWRITE, fd: 3, off: 0x28000) = 0x7fb9cb438000
+0.128 ( 0.007 ms): pwd/30793 mmap(addr: 0x7fb9cb591000, len: 352256, prot: READ, flags: PRIVATE|FIXED|DENYWRITE, fd: 3, off: 0x181000) = 0x7fb9cb591000
+0.138 ( 0.007 ms): pwd/30793 mmap(addr: 0x7fb9cb5e7000, len: 24576, prot: READ|WRITE, flags: PRIVATE|FIXED|DENYWRITE, fd: 3, off: 0x1d6000) = 0x7fb9cb5e7000
+0.150 ( 0.005 ms): pwd/30793 mmap(addr: 0x7fb9cb5ed000, len: 52888, prot: READ|WRITE, flags: PRIVATE|FIXED|ANONYMOUS) = 0x7fb9cb5ed000
+0.163 ( 0.002 ms): pwd/30793 close(fd: 3)                                                          = 0
+    </div>
+    <div class="column aligncenter">
+      <h1>perf</h1>
+    </div>
+  </div>
   </div>
 </section>
