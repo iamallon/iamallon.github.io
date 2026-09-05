@@ -451,7 +451,6 @@ layout: webslide
   </div>
 </section>
 
-
 <section>
   <div class="wrap">
   <div class="grid vertical-align">
@@ -567,8 +566,6 @@ sda               0.00      0.00     0.00    0.00     0.00    0.00   0.00
   </div>
 </section>
 
-
-
 <section>
   <div class="wrap">
   <div class="grid vertical-align">
@@ -599,5 +596,129 @@ sda               0.00      0.00     0.00    0.00     0.00    0.00   0.00
       <h1>perf</h1>
     </div>
   </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">5.2 .NET Perf Tools</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# dotnet-counters monitor -- ./HelloWorld
+[System.Runtime]
+    dotnet.assembly.count ({assembly})                               115
+    dotnet.gc.collections ({collection})
+        gc.heap.generation
+        ------------------
+        gen0                                                           5
+        gen1                                                           1
+        gen2                                                           1
+    dotnet.gc.heap.total_allocated (By)                       1.6947e+08
+    dotnet.gc.last_collection.heap.fragmentation.size (By)
+        gc.heap.generation
+        ------------------
+        gen0                                                           0
+        gen1                                                     348,248
+        gen2                                                           0
+        loh                                                           32
+        poh                                                            0
+    dotnet.gc.last_collection.heap.size (By)
+        gc.heap.generation
+        ------------------
+        gen0                                                           0
+        gen1                                                  18,010,920
+        gen2                                                   5,065,600
+        loh                                                       98,384
+        poh                                                    3,407,048
+    dotnet.gc.last_collection.memory.committed_size (By)      66,842,624
+    dotnet.gc.pause.time (s)                                           0.05
+    dotnet.jit.compilation.time (s)                                    1.317
+    dotnet.jit.compiled_il.size (By)                             574,886
+    dotnet.jit.compiled_methods ({method})                         6,008
+    dotnet.monitor.lock_contentions ({contention})                   194
+    dotnet.process.cpu.count ({cpu})                                  16
+    dotnet.process.cpu.time (s)
+        cpu.mode
+        --------
+        system                                                         4.953
+        user                                                           6.266
+    dotnet.process.memory.working_set (By)                             1.3217e+08
+    dotnet.thread_pool.queue.length ({work_item})                      0
+    dotnet.thread_pool.thread.count ({thread})                       133
+    dotnet.thread_pool.work_item.count ({work_item})              71,188
+    dotnet.timer.count ({timer})                                     124
+      </pre>
+    </div>
+    <div class="column aligncenter">
+      <h1>dotnet-counters</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# dotnet-trace collect -o report.nettrace -- ./HelloWorld
+# dotnet-trace report ./report.nettrace topN -n 10
+Top 10 Functions (Exclusive)                                                  Inclusive           Exclusive
+1.  LowLevelLifoSemaphore.WaitNative(class Microsoft.Win32.SafeHandles.Saf    36%                 36%
+2.  Monitor.Wait(class System.Object,int32)                                   31.82%              31.82%
+3.  WaitHandle.WaitOneNoCheck(int32,bool,class System.Object,value class W    10.66%              10.66%
+4.  Missing Symbol                                                            10.58%              10.58%
+5.  FileSystemWatcher+RunningInstance.TryReadEvent(value class NotifyEvent    10.7%               7.19%
+6.  watcher!Interop+Sys.Read(class System.Runtime.InteropServices.SafeHand    3.51%               3.51%
+7.  WebHost.ConfigureWebDefaults(class Microsoft.AspNetCore.Hosting.IWebHo    0.01%               0.01%
+8.  Thread.<PollGC>g__PollGCWorker|67_0()                                     0.01%               0.01%
+9.  ApplicationModelFactory.CreateApplicationModel(class System.Collection    0.02%               0.01%
+10. CompareInfo.Compare(value class System.ReadOnlySpan`1<wchar>,value cla    0%                  0%
+      </pre>
+    </div>
+    <div class="column aligncenter">
+      <h1>dotnet-trace</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# dotnet-dump collect -p 2678 -o mem.dmp
+# dotnet-dump analyze mem.dmp
+> dumpheap -min 10000 -stat
+Statistics:
+          MT Count TotalSize Class Name
+7f0055493e78     1    10,368 System.Collections.Generic.Dictionary<System.String, System.String>+Entry[]
+7f00581ef628     1    13,816 System.Collections.Generic.Dictionary<System.ValueTuple<System.String, System.String>, Microsoft.AspNetCore.StaticAssets.StaticAssetDescriptor>+Entry[]
+7f005801e298     1    15,472 System.Collections.Concurrent.ConcurrentDictionary<Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCacheKey, Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite>+VolatileNode[]
+7f00544622d8     1    16,344 System.Object[]
+7f005801eb50     1    17,264 System.Collections.Generic.Dictionary<Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier, Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory+ServiceDescriptorCacheItem>+Entry[]
+7f005448b158     2   147,552 System.Int32[]
+7f005448dd58     2   609,664 System.String
+7f0055574168     1 1,048,600 System.Byte[]
+Total 10 objects, 1,879,080 bytes
+      </pre>
+    </div>
+    <div class="column aligncenter">
+      <h1>dotnet-dump</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">5.3 FlameGraphs</h1>
   </div>
 </section>
