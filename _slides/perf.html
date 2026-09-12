@@ -252,8 +252,8 @@ layout: webslide
   <div class="wrap aligncenter">
     <blockquote class="text-quote">
       <p>
-	The term utilization is often used for operatin systems to describe device usage, such as for the CPU and disk devices.
-	Utilization can be time-based or capacity-based.
+	The term utilization is often used for operating systems to describe device usage, such as for the CPU and disk devices.
+	Utilization can be <b>time-based</b> or <b>capacity-based</b>.
       </p>
       <p>
       <cite>
@@ -753,4 +753,155 @@ Total 10 objects, 1,879,080 bytes
     <iframe src="../static/VS_FLAME_GRAPH.jpg">
     </iframe>
   </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">6. Virtualization</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <blockquote class="text-quote">
+      <p>
+	What is observable depends on the <b>location</b> from which the observability tools are launched...
+      </p>
+      <p>
+      <cite>
+	Systems Performance: Enterprise and the Cloud, 2nd Edition by Brendan Gregg
+      </cite>
+    </p>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">6.1 Hardware Virtualization</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing aligncenter">Hypervisor</h1>
+    <h1 class="text-intro aligncenter">Virtual Machine Monitor/Manager</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <blockquote class="text-quote">
+      <p>
+	From a hardware virtualized guest, only the virtual devices can be seen (unless pass-through/SR-IOV is used).
+      </p>
+      <p>
+      <cite>
+	Systems Performance: Enterprise and the Cloud, 2nd Edition by Brendan Gregg
+      </cite>
+    </p>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">6.2 Software Virtualization</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing aligncenter">Containers</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <blockquote class="text-quote">
+      <p>
+	You might expect that performance tools run from a container would show only cotnainer statistics, but that is <b>often not the case</b>.
+      </p>
+      <p>
+      <cite>
+	Systems Performance: Enterprise and the Cloud, 2nd Edition by Brendan Gregg
+      </cite>
+    </p>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# docker stats
+CONTAINER ID   NAME   CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
+be72ba35476b   c1     0.01%     404.3MiB / 15.37GiB   2.57%     646kB / 18.3kB    262MB / 598MB     27
+fe5211db4729   c2     0.00%     104.9MiB / 15.37GiB   0.67%     23.4kB / 199kB    107MB / 14.5MB    26
+facf154f6269   c3     0.00%     112.4MiB / 15.37GiB   0.71%     592kB / 249kB     95.3MB / 672kB    9
+      </pre>
+    </div>
+    <div class="column aligncenter">
+      <h1>docker</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">7. Takeaways</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1>Performance Mantras</h1>
+    <ul class="flexblock steps">
+      <li>
+	<h3>Don't do it.</h3>
+	<i>Eliminate unnecesary work.</i>
+      </li>
+      <li>
+	<div class="process step-2"></div>
+	<h3>Do it, but don't do it again.</h3>
+	<i>Caching.</i>
+      </li>
+      <li>
+	<div class="process step-3"></div>
+	<h3>Do it less.</h3>
+	<i>Tune refreshes, polling, or updates to be less frequent.</i>
+      </li>
+      <li>
+	<div class="process step-4"></div>
+	<h3>Do it later.</h3>
+	<i>Write-back caching.</i>
+      </li>
+      <li>
+	<div class="process step-5"></div>
+	<h3>Do it when they're not looking.</h3>
+	<i>Schedule work during off-peak hours.</i>
+      </li>
+      <li>
+	<div class="process step-6"></div>
+	<h3>Do it concurently.</h3>
+	<i>Switch from single-threaded to multi-threaded.</i>
+      </li>
+      <li>
+	<div class="process step-7"></div>
+	<h3>Do it more cheaply.</h3>
+	<i>Buy faster hardware.</i>
+      </li>
+    </ul>
+  </div>
+  <footer>
+    <p class="alignright">
+      <i>
+	Systems Performance: Enterprise and the Cloud, 2nd Edition
+      </i>
+      by Brendan Gregg
+    </p>
+  </footer>
 </section>
