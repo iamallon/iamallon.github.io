@@ -25,15 +25,15 @@ layout: webslide
 	<a href="#slide=3">Perspectives</a>
 	   <ol>
 	     <li>
-	       <p>Workload Analysis</p>
+	       <p>Top-Down Analysis</p>
 	     </li>
 	     <li>
-	       <p>Resource Analysis</p>
+	       <p>Bottom-Up Analysis</p>
 	     </li>
 	   </ol>
       </li>
       <li>
-	<a href="#slide=12">Methodologies</a>
+	<a href="#slide=10">Methodologies</a>
 	<ol>
 	  <li>
 	    <p>Streetlight Anti-Method</p>
@@ -50,7 +50,7 @@ layout: webslide
 	</ol>
       </li>
       <li>
-	<a href="#slide=30">Concepts</a>
+	<a href="#slide=28">Concepts</a>
 	<ol>
 	  <li>
 	    <p>Observer Effect</p>
@@ -61,7 +61,7 @@ layout: webslide
 	</ol>
       </li>
       <li>
-	<a href="#slide=35"> Observability</a>
+	<a href="#slide=33"> Observability</a>
 	<ol>
 	  <li>
 	    <p> PMCs (Performance Monitoring Counters)</p>
@@ -75,7 +75,7 @@ layout: webslide
 	</ol>
       </li>
       <li>
-	<a href="#slide=41">Tools</a>
+	<a href="#slide=39">Tools</a>
 	<ol>
 	  <li>
 	    <p>Linux Perf Tools</p>
@@ -89,7 +89,7 @@ layout: webslide
 	</ol>
       </li>
       <li>
-	<a href="#slide=55">Virtualization</a>
+	<a href="#slide=53">Virtualization</a>
 	<ol>
 	  <li>
 	    <p>Hardware Virtualization</p>
@@ -100,7 +100,7 @@ layout: webslide
 	</ol>
       </li>
       <li>
-	<a href="#slide=64">Takeaways</a>
+	<a href="#slide=62">Takeaways</a>
       </li>
     </ol>
   </div>
@@ -126,7 +126,7 @@ layout: webslide
 
 <section>
   <div class="wrap">
-    <h1 class="text-landing">1.1 Workload Analysis</h1>
+    <h1 class="text-landing">1.1 Top-Down Analysis</h1>
   </div>
 </section>
 
@@ -137,50 +137,14 @@ layout: webslide
 </section>
 
 <section>
-  <div class="grid">
-    <div class="column">
-      <h6>Requests</h6>
-      <p>Workload applied to the application. This is the gauge that tells if you are trying to handle an unresonable ammount of work all at the same time. Even more, doing a <b>workload characterization</b> can uncover some unbalances in how that workload is distributed.</p>
-    </div>
-    <div class="column">
-      <h6>Latency</h6>
-      <p>The time it took the application to execute the work.
-	Arguably the most important metric for an applications performance and it needs to be <b>very well defined</b>. As an example, for a database engine it can refer to the <b>query latency</b> or <b>connection latency</b>. Another mandatory mention here is <b>throughput</b>, as the sister opposite metric.
-      </p>
-    </div>
-    <div class="column">
-      <h6>Completion</h6>
-      <p>Determines if the system had any errors during the workload. If there is a <b>fail-fast path</b> and the system experienced some errors that converged in that said path the results of the analysis will be very good or very bad, depending on the retry mechanism or other factors.</p>
-    </div>
-  </div>
-</section>
-
-<section>
   <div class="wrap">
-    <h1 class="text-landing">1.2 Resource Analysis</h1>
+    <h1 class="text-landing">1.2 Bottom-Up Analysis</h1>
   </div>
 </section>
 
 <section>
   <div class="wrap aligncenter">
     <h1 class="text-landing aligncenter">Starting Point: Hardware Layer</h1>
-  </div>
-</section>
-
-<section>
-  <div class="grid">
-    <div class="column">
-      <h6>Utilization</h6>
-      <p>Very common metric that that indicates a potential issue with a resource that is about to reach it's limit.</p>
-    </div>
-    <div class="column">
-      <h6>Saturation</h6>
-      <p>Complementary metric or indicator of utilization that tells if the <b>resource is under heavy load</b>, more than it can handle.</p>
-    </div>
-    <div class="column">
-      <h6>Capacity (Planning)</h6>
-      <p>Provisioning and scaling policies are alwasy hard to get right. Resource analysis should help with decisions regarding this.</p>
-    </div>
   </div>
 </section>
 
