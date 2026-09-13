@@ -1,0 +1,913 @@
+---
+layout: webslide
+---
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">Systems Perfomance</h1>
+    <p class="text-intro"><i>Distilled</i></p>
+  </div>
+  <footer>
+    <p class="alignright">
+      <i>
+	Systems Performance: Enterprise and the Cloud, 2nd Edition
+      </i>
+      by Brendan Gregg
+    </p>
+  </footer>
+</section>
+
+<section>
+  <div class="wrap toc">
+    <h3>Table of Contents</h3>
+    <hr>
+    <ol>
+      <li>
+	<a href="#">Perspectives</a>
+	   <ol>
+	     <li>
+	       <p>Workload Analysis</p>
+	     </li>
+	     <li>
+	       <p>Resource Analysis</p>
+	     </li>
+	   </ol>
+      </li>
+      <li>
+	<a href="#">Methodologies</a>
+	<ol>
+	  <li>
+	    <p>Streetlight Anti-Method</p>
+	  </li>
+	  <li>
+	    <p>Random Change Anti-Method</p>
+	  </li>
+	  <li>
+	    <p>USE Method</p>
+	  </li>
+	  <li>
+	    <p>RED Method</p>
+	  </li>
+	</ol>
+      </li>
+      <li>
+	<a href="#">Concepts</a>
+	<ol>
+	  <li>
+	    <p>Observer Effect</p>
+	  </li>
+	  <li>
+	    <p>Queueing Theory</p>
+	  </li>
+	</ol>
+      </li>
+      <li>
+	<a href="#"> Observability</a>
+	<ol>
+	  <li>
+	    <p> PMCs (Performance Monitoring Counters)</p>
+	  </li>
+	  <li>
+	    <p>Profiling</p>
+	  </li>
+	  <li>
+	    <p>Tracing</p>
+	  </li>
+	</ol>
+      </li>
+      <li>
+	<a href="#">Tools</a>
+	<ol>
+	  <li>
+	    <p>Linux Perf Tools</p>
+	  </li>
+	  <li>
+	    <p>.NET Perf Tools</p>
+	  </li>
+	  <li>
+	    <p>Flame Graphs</p>
+	  </li>
+	</ol>
+      </li>
+      <li>
+	<a href="#">Virtualization</a>
+	<ol>
+	  <li>
+	    <p>Hardware Virtualization</p>
+	  </li>
+	  <li>
+	    <p>OS Virtualization</p>
+	  </li>
+	</ol>
+      </li>
+      <li>
+	<a href="#">Takeaways</a>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">1. Perspectives</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <h1 class="text-landing">Load vs. Architecture Issue?</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <img alt="linux_perf_tools" class="aligncenter size-60" src="https://www.brendangregg.com/Perf/linux_observability_tools.png">
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">1.1 Workload Analysis</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <h1 class="text-landing aligncenter">Starting Point: Application Layer</h1>
+  </div>
+</section>
+
+<section>
+  <div class="grid">
+    <div class="column">
+      <h6>Requests</h6>
+      <p>Workload applied to the application. This is the gauge that tells if you are trying to handle an unresonable ammount of work all at the same time. Even more, doing a <b>workload characterization</b> can uncover some unbalances in how that workload is distributed.</p>
+    </div>
+    <div class="column">
+      <h6>Latency</h6>
+      <p>The time it took the application to execute the work.
+	Arguably the most important metric for an applications performance and it needs to be <b>very well defined</b>. As an example, for a database engine it can refer to the <b>query latency</b> or <b>connection latency</b>. Another mandatory mention here is <b>throughput</b>, as the sister opposite metric.
+      </p>
+    </div>
+    <div class="column">
+      <h6>Completion</h6>
+      <p>Determines if the system had any errors during the workload. If there is a <b>fail-fast path</b> and the system experienced some errors that converged in that said path the results of the analysis will be very good or very bad, depending on the retry mechanism or other factors.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">1.2 Resource Analysis</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <h1 class="text-landing aligncenter">Starting Point: Hardware Layer</h1>
+  </div>
+</section>
+
+<section>
+  <div class="grid">
+    <div class="column">
+      <h6>Utilization</h6>
+      <p>Very common metric that that indicates a potential issue with a resource that is about to reach it's limit.</p>
+    </div>
+    <div class="column">
+      <h6>Saturation</h6>
+      <p>Complementary metric or indicator of utilization that tells if the <b>resource is under heavy load</b>, more than it can handle.</p>
+    </div>
+    <div class="column">
+      <h6>Capacity (Planning)</h6>
+      <p>Provisioning and scaling policies are alwasy hard to get right. Resource analysis should help with decisions regarding this.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">2. Methodologies</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">2.1 Streelight Anti-Method</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <blockquote class="text-quote">
+      <p>One night a police officer sees a drunk searching the ground beneath a streetlight and asks what he is looking for. The drunk says he has lost his keys.
+	The police officer can't find them either and asks: "Are you sure you lost them here, under the streetlight?" The drunk replies: "No, but this is where the light
+	is best."
+      </p>
+      <p>
+      <cite>
+	Systems Performance: Enterprise and the Cloud, 2nd Edition by Brendan Gregg
+      </cite>
+    </p>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">2.2 Random Change Anti-Method</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <blockquote class="text-quote">
+      <p>
+	The user randomly guesses where the problem might be and then changes things until it goes away.
+      </p>
+      <p>
+      <cite>
+	Systems Performance: Enterprise and the Cloud, 2nd Edition by Brendan Gregg
+      </cite>
+    </p>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">2.3 USE Method</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <h1 class="text-landing">Utilization</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <blockquote class="text-quote">
+      <p>
+	The term utilization is often used for operating systems to describe device usage, such as for the CPU and disk devices.
+	Utilization can be <b>time-based</b> or <b>capacity-based</b>.
+      </p>
+      <p>
+      <cite>
+	Systems Performance: Enterprise and the Cloud, 2nd Edition by Brendan Gregg
+      </cite>
+    </p>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <h1 class="text-landing">Saturation</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <blockquote class="text-quote">
+      <p>
+	Saturation begins to occur at 100% utilization (capacity-based), as extra work cannot be processed and begins to <b>queue</b>.
+      </p>
+      <p>
+	<cite>
+	  Systems Performance: Enterprise and the Cloud, 2nd Edition by Brendan Gregg
+	</cite>
+    </p>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <h1 class="text-landing">Errors</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <img alt="linux_perf_tools" class="aligncenter" src="../static/USE.jpg">
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">2.4 RED Method</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <h1 class="text-landing">Request Rate</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <h1 class="text-landing">Errors</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <h1 class="text-landing">Duration</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <img alt="linux_perf_tools" class="aligncenter" src="../static/RED_API.jpg">
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <img alt="linux_perf_tools" class="aligncenter" src="../static/RED_CONSUMER.jpg">
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">3. Concepts</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">3.1 Observer's Effect</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <blockquote class="text-quote">
+      <p>
+	The observer effect is the <b>disturbance</b> of a system by the act of observation.
+      </p>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">3.2 Queueing Theory</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <blockquote class="text-quote">
+      <p>
+	Many components in computing, both software and hardware, can be modeled as <b>queueing systems</b>.
+      </p>
+      <p>
+	<cite>
+	  Systems Performance: Enterprise and the Cloud, 2nd Edition by Brendan Gregg
+	</cite>
+    </p>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">4. Observability</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">4.1 PMCs (Performance Monitoring Counters)</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <h1 class="text-landing">Hardware Counters</h1>
+  </div>
+  <hr>
+  <ul class="flexblock specs">
+    <li>
+      <div class="content-center">
+	<a href="https://perfmon-events.intel.com/platforms/arrowlake/core-events/p-core/">Intel PMCs</a>
+      </div>
+    </li>
+    <li>
+      <div class="content-center">
+	<a href="https://docs.amd.com/r/en-US/57368-uProf-user-guide/1.2.1.-Performance-Monitor-Counters-PMC">AMD PMCs</a>
+      </div>
+    </li>
+    <li>
+      <div class="content-center">
+	<a href="https://support.arm.com/documentation/101430/0102/Debug-descriptions/Performance-Monitoring-Unit/PMU-events">ARM PMUs</a>
+      </div>
+    </li>
+  </ul>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <h1 class="text-landing">Software Counters</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">4.2 Profiling</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">4.3 Tracing</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">5. Tools</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">5.1 Linux Perf Tools</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# dmesg -T -l err
+[Sat Sep  5 11:39:02 2026] amd_pstate: min_freq(0) or max_freq(0) or nominal_freq(0) value is incorrect
+[Sat Sep  5 11:39:02 2026] amd_pstate: failed to register with return -19
+[Sat Sep  5 11:39:04 2026] ata6.00: supports DRM functions and may not be fully accessible
+[Sat Sep  5 11:39:04 2026] ata6.00: supports DRM functions and may not be fully accessible
+[Sat Sep  5 11:39:10 2026] ACPI Warning: SystemIO range 0x0000000000000B00-0x0000000000000B08 conflicts with OpRegion 0x0000000000000B00-0x0000000000000B0F (\GSA1.SMBI) (20250807/utaddress-204)
+[Sat Sep  5 11:39:12 2026] faux_driver regulatory: Direct firmware load for regulatory.db failed with error -2
+      </pre>
+    </div>
+    <div class="column aligncenter">
+      <h1>dmesg</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# vmstat -SM 1
+procs -----------memory---------- ---swap-- -----io---- -system-- -------cpu-------
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st gu
+ 2  0      0  25633     95   2079    0    0  1257   666 10350   5  2  1 97  0  0  0
+ 0  0      0  25636     95   2079    0    0     0     0 6222 5891  0  0 99  0  0  0
+ 0  0      0  25636     95   2079    0    0     0    40 5761 5716  0  0 99  0  0  0
+ 0  0      0  25644     95   2079    0    0     0     0 6786 5737  2  0 97  0  0  0
+ 2  0      0  25645     95   2079    0    0     0     0 5646 5342  0  0 99  0  0  0
+ 0  0      0  25643     95   2079    0    0     0     0 8032 8308  0  1 99  0  0  0
+ 0  0      0  25620     95   2079    0    0     0     0 9512 10461 2  1 98  0  0  0
+ 0  0      0  25619     95   2078    0    0     0     0 7185 7416  1  1 99  0  0  0
+ 0  0      0  25621     95   2079    0    0     0     0 6390 5492  2  0 97  0  0  0
+ 0  0      0  25620     95   2079    0    0     0     0 5134 5040  0  0 99  0  0  0
+ 0  0      0  25620     95   2079    0    0     0     0 5912 5768  0  0 99  0  0  0
+ 0  0      0  25621     95   2079    0    0     0     0 5489 5257  0  0 99  0  0  0
+      </pre>
+    </div>
+    <div class="column aligncenter">
+      <h1>vmstat</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# iostat -sx 1
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           1.42    0.00    0.79    0.02    0.00   97.77
+
+Device             tps      kB/s    rqm/s   await  areq-sz  aqu-sz  %util
+nvme0n1          29.21   1403.97    18.14    0.58    48.06    0.02   0.57
+sda               0.61     11.28     1.72    1.06    18.48    0.00   0.01
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.62    0.00    0.54    0.04    0.00   98.79
+
+Device             tps      kB/s    rqm/s   await  areq-sz  aqu-sz  %util
+nvme0n1          26.00    228.00    18.00    0.58     8.77    0.02   0.90
+sda               0.00      0.00     0.00    0.00     0.00    0.00   0.00
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           0.84    0.00    1.13    0.00    0.00   98.04
+
+Device             tps      kB/s    rqm/s   await  areq-sz  aqu-sz  %util
+nvme0n1          23.00    376.00    18.00    0.87    16.35    0.02   1.00
+sda               0.00      0.00     0.00    0.00     0.00    0.00   0.00
+
+avg-cpu:  %user   %nice %system %iowait  %steal   %idle
+           3.30    0.00    1.25    0.04    0.00   95.41
+
+Device             tps      kB/s    rqm/s   await  areq-sz  aqu-sz  %util
+nvme0n1          11.00    116.00    17.00    1.09    10.55    0.01   0.80
+sda               0.00      0.00     0.00    0.00     0.00    0.00   0.00
+      </pre>
+    </div>
+    <div class="column aligncenter">
+      <h1>iostat</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# pidstat 1
+12:09:55 PM   UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+12:09:56 PM  1000      1068    0.00    0.99    0.00    0.00    0.99    23  sway
+12:09:56 PM  1000      1207    2.97    0.99    0.00    0.00    3.96    16  firefox-wayland
+12:09:56 PM  1000      1416    0.99    0.00    0.00    0.00    0.99    18  Privileged Cont
+12:09:56 PM  1000      1538    0.99    0.00    0.00    0.00    0.99    18  Utility Process
+12:09:56 PM  1000      1555    0.99    0.00    0.00    0.00    0.99    22  Isolated Web Co
+12:09:56 PM  1000      1567    2.97    1.98    0.00    0.00    4.95    17  Isolated Web Co
+
+12:09:56 PM   UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+12:09:57 PM     0       618    0.00    1.00    0.00    0.00    1.00     6  kworker/6:3-events
+12:09:57 PM  1000      1068    0.00    1.00    0.00    0.00    1.00    23  sway
+12:09:57 PM  1000      1121    0.00    1.00    0.00    0.00    1.00    21  foot
+12:09:57 PM  1000      1207    1.00    1.00    0.00    0.00    2.00    16  firefox-wayland
+12:09:57 PM  1000      1416    0.00    1.00    0.00    0.00    1.00    18  Privileged Cont
+12:09:57 PM  1000      1538    1.00    1.00    0.00    0.00    2.00    18  Utility Process
+12:09:57 PM  1000      1567    2.00    1.00    0.00    0.00    3.00    17  Isolated Web Co
+12:09:57 PM  1000      3434    1.00    1.00    0.00    0.00    2.00     4  pulseaudio
+12:09:57 PM  1000     23268    1.00    0.00    0.00    0.00    1.00     0  Isolated Web Co
+12:09:57 PM  1000     26975    0.00    1.00    0.00    0.00    1.00     3  pidstat
+
+12:09:57 PM   UID       PID    %usr %system  %guest   %wait    %CPU   CPU  Command
+12:09:58 PM  1000      1068    1.00    0.00    0.00    0.00    1.00    23  sway
+12:09:58 PM  1000      1121    0.00    2.00    0.00    0.00    2.00    21  foot
+12:09:58 PM  1000      1207    0.00    1.00    0.00    0.00    1.00    16  firefox-wayland
+12:09:58 PM  1000      1538    1.00    0.00    0.00    0.00    1.00    18  Utility Process
+12:09:58 PM  1000      1567    4.00    2.00    0.00    0.00    6.00    17  Isolated Web Co
+12:09:58 PM  1000      3439    1.00    0.00    0.00    0.00    1.00     8  Isolated Web Co
+12:09:58 PM  1000     11190    1.00    0.00    0.00    0.00    1.00     8  Isolated Web Co
+12:09:58 PM  1000     26975    1.00    2.00    0.00    0.00    3.00     3  pidstat
+      </pre>
+    </div>
+    <div class="column aligncenter">
+      <h1>pidstat</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# perf trace pwd
+? (         ): pwd/30793  ... [continued]: execve())                                           = 0
+0.028 ( 0.002 ms): pwd/30793 brk()                                                                 = 0x556b6ea1d000
+0.049 ( 0.003 ms): pwd/30793 access(filename: 0xcb639390, mode: R)                                 = -1 ENOENT (No such file or directory)
+0.057 ( 0.004 ms): pwd/30793 openat(dfd: CWD, filename: 0xcb638134, flags: RDONLY|CLOEXEC)         = 3
+0.063 ( 0.002 ms): pwd/30793 fstat(fd: 3, statbuf: 0x7ffc31877770)                                 = 0
+0.066 ( 0.005 ms): pwd/30793 mmap(len: 40123, prot: READ, flags: PRIVATE, fd: 3)                   = 0x7fb9cb5fc000
+0.073 ( 0.002 ms): pwd/30793 close(fd: 3)                                                          = 0
+0.082 ( 0.003 ms): pwd/30793 openat(dfd: CWD, filename: 0xcb644fb0, flags: RDONLY|CLOEXEC)         = 3
+0.087 ( 0.002 ms): pwd/30793 read(fd: 3, buf: 0x7ffc318778d8, count: 832)                          = 832
+0.091 ( 0.002 ms): pwd/30793 pread64(fd: 3, buf: 0x7ffc318774d0, count: 784, pos: 64)              = 784
+0.094 ( 0.002 ms): pwd/30793 fstat(fd: 3, statbuf: 0x7ffc31877770)                                 = 0
+0.098 ( 0.004 ms): pwd/30793 mmap(len: 8192, prot: READ|WRITE, flags: PRIVATE|ANONYMOUS)           = 0x7fb9cb5fa000
+0.106 ( 0.002 ms): pwd/30793 pread64(fd: 3, buf: 0x7ffc318773c0, count: 784, pos: 64)              = 784
+0.110 ( 0.005 ms): pwd/30793 mmap(len: 2006680, prot: READ, flags: PRIVATE|DENYWRITE, fd: 3)       = 0x7fb9cb410000
+0.116 ( 0.010 ms): pwd/30793 mmap(addr: 0x7fb9cb438000, len: 1413120, prot: READ|EXEC, flags: PRIVATE|FIXED|DENYWRITE, fd: 3, off: 0x28000) = 0x7fb9cb438000
+0.128 ( 0.007 ms): pwd/30793 mmap(addr: 0x7fb9cb591000, len: 352256, prot: READ, flags: PRIVATE|FIXED|DENYWRITE, fd: 3, off: 0x181000) = 0x7fb9cb591000
+0.138 ( 0.007 ms): pwd/30793 mmap(addr: 0x7fb9cb5e7000, len: 24576, prot: READ|WRITE, flags: PRIVATE|FIXED|DENYWRITE, fd: 3, off: 0x1d6000) = 0x7fb9cb5e7000
+0.150 ( 0.005 ms): pwd/30793 mmap(addr: 0x7fb9cb5ed000, len: 52888, prot: READ|WRITE, flags: PRIVATE|FIXED|ANONYMOUS) = 0x7fb9cb5ed000
+0.163 ( 0.002 ms): pwd/30793 close(fd: 3)                                                          = 0
+    </div>
+    <div class="column aligncenter">
+      <h1>perf</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">5.2 .NET Perf Tools</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# dotnet-counters monitor -- ./HelloWorld
+[System.Runtime]
+    dotnet.assembly.count ({assembly})                               115
+    dotnet.gc.collections ({collection})
+        gc.heap.generation
+        ------------------
+        gen0                                                           5
+        gen1                                                           1
+        gen2                                                           1
+    dotnet.gc.heap.total_allocated (By)                       1.6947e+08
+    dotnet.gc.last_collection.heap.fragmentation.size (By)
+        gc.heap.generation
+        ------------------
+        gen0                                                           0
+        gen1                                                     348,248
+        gen2                                                           0
+        loh                                                           32
+        poh                                                            0
+    dotnet.gc.last_collection.heap.size (By)
+        gc.heap.generation
+        ------------------
+        gen0                                                           0
+        gen1                                                  18,010,920
+        gen2                                                   5,065,600
+        loh                                                       98,384
+        poh                                                    3,407,048
+    dotnet.gc.last_collection.memory.committed_size (By)      66,842,624
+    dotnet.gc.pause.time (s)                                           0.05
+    dotnet.jit.compilation.time (s)                                    1.317
+    dotnet.jit.compiled_il.size (By)                             574,886
+    dotnet.jit.compiled_methods ({method})                         6,008
+    dotnet.monitor.lock_contentions ({contention})                   194
+    dotnet.process.cpu.count ({cpu})                                  16
+    dotnet.process.cpu.time (s)
+        cpu.mode
+        --------
+        system                                                         4.953
+        user                                                           6.266
+    dotnet.process.memory.working_set (By)                             1.3217e+08
+    dotnet.thread_pool.queue.length ({work_item})                      0
+    dotnet.thread_pool.thread.count ({thread})                       133
+    dotnet.thread_pool.work_item.count ({work_item})              71,188
+    dotnet.timer.count ({timer})                                     124
+      </pre>
+    </div>
+    <div class="column aligncenter">
+      <h1>dotnet-counters</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# dotnet-trace collect -o report.nettrace -- ./HelloWorld
+# dotnet-trace report ./report.nettrace topN -n 10
+Top 10 Functions (Exclusive)                                                  Inclusive           Exclusive
+1.  LowLevelLifoSemaphore.WaitNative(class Microsoft.Win32.SafeHandles.Saf    36%                 36%
+2.  Monitor.Wait(class System.Object,int32)                                   31.82%              31.82%
+3.  WaitHandle.WaitOneNoCheck(int32,bool,class System.Object,value class W    10.66%              10.66%
+4.  Missing Symbol                                                            10.58%              10.58%
+5.  FileSystemWatcher+RunningInstance.TryReadEvent(value class NotifyEvent    10.7%               7.19%
+6.  watcher!Interop+Sys.Read(class System.Runtime.InteropServices.SafeHand    3.51%               3.51%
+7.  WebHost.ConfigureWebDefaults(class Microsoft.AspNetCore.Hosting.IWebHo    0.01%               0.01%
+8.  Thread.<PollGC>g__PollGCWorker|67_0()                                     0.01%               0.01%
+9.  ApplicationModelFactory.CreateApplicationModel(class System.Collection    0.02%               0.01%
+10. CompareInfo.Compare(value class System.ReadOnlySpan`1<wchar>,value cla    0%                  0%
+      </pre>
+    </div>
+    <div class="column aligncenter">
+      <h1>dotnet-trace</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# dotnet-dump collect -p 2678 -o mem.dmp
+# dotnet-dump analyze mem.dmp
+> dumpheap -min 10000 -stat
+Statistics:
+          MT Count TotalSize Class Name
+7f0055493e78     1    10,368 System.Collections.Generic.Dictionary<System.String, System.String>+Entry[]
+7f00581ef628     1    13,816 System.Collections.Generic.Dictionary<System.ValueTuple<System.String, System.String>, Microsoft.AspNetCore.StaticAssets.StaticAssetDescriptor>+Entry[]
+7f005801e298     1    15,472 System.Collections.Concurrent.ConcurrentDictionary<Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCacheKey, Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceCallSite>+VolatileNode[]
+7f00544622d8     1    16,344 System.Object[]
+7f005801eb50     1    17,264 System.Collections.Generic.Dictionary<Microsoft.Extensions.DependencyInjection.ServiceLookup.ServiceIdentifier, Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteFactory+ServiceDescriptorCacheItem>+Entry[]
+7f005448b158     2   147,552 System.Int32[]
+7f005448dd58     2   609,664 System.String
+7f0055574168     1 1,048,600 System.Byte[]
+Total 10 objects, 1,879,080 bytes
+      </pre>
+    </div>
+    <div class="column aligncenter">
+      <h1>dotnet-dump</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">5.3 Flame Graphs</h1>
+  </div>
+</section>
+
+<section>
+  <div class="embed">
+    <iframe src="../static/perf.svg">
+    </iframe>
+  </div>
+</section>
+
+<section>
+  <div class="embed">
+    <iframe src="../static/VS_FLAME_GRAPH.jpg">
+    </iframe>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">6. Virtualization</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <blockquote class="text-quote">
+      <p>
+	What is observable depends on the <b>location</b> from which the observability tools are launched...
+      </p>
+      <p>
+      <cite>
+	Systems Performance: Enterprise and the Cloud, 2nd Edition by Brendan Gregg
+      </cite>
+    </p>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">6.1 Hardware Virtualization</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing aligncenter">Hypervisor</h1>
+    <h1 class="text-intro aligncenter">Virtual Machine Monitor/Manager</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <blockquote class="text-quote">
+      <p>
+	From a hardware virtualized guest, only the virtual devices can be seen (unless pass-through/SR-IOV is used).
+      </p>
+      <p>
+      <cite>
+	Systems Performance: Enterprise and the Cloud, 2nd Edition by Brendan Gregg
+      </cite>
+    </p>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">6.2 Software Virtualization</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing aligncenter">Containers</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap aligncenter">
+    <blockquote class="text-quote">
+      <p>
+	You might expect that performance tools run from a container would show only cotnainer statistics, but that is <b>often not the case</b>.
+      </p>
+      <p>
+      <cite>
+	Systems Performance: Enterprise and the Cloud, 2nd Edition by Brendan Gregg
+      </cite>
+    </p>
+    </blockquote>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+  <div class="grid vertical-align">
+    <div class="column">
+      <pre>
+# docker stats
+CONTAINER ID   NAME   CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
+be72ba35476b   c1     0.01%     404.3MiB / 15.37GiB   2.57%     646kB / 18.3kB    262MB / 598MB     27
+fe5211db4729   c2     0.00%     104.9MiB / 15.37GiB   0.67%     23.4kB / 199kB    107MB / 14.5MB    26
+facf154f6269   c3     0.00%     112.4MiB / 15.37GiB   0.71%     592kB / 249kB     95.3MB / 672kB    9
+      </pre>
+    </div>
+    <div class="column aligncenter">
+      <h1>docker</h1>
+    </div>
+  </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h1 class="text-landing">7. Takeaways</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="text-context">How we can detect performance issues?</p>
+    <h1>Start with RED/USE methodologies</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="text-context">How we can find the culprit?</p>
+    <h1>Use tools or flame graphs to identify bottlenecks</h1>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="text-context">How we can prevent performance issues?</p>
+    <h1>Performance mantras</h1>
+    <ul class="flexblock steps">
+      <li>
+	<h3>Don't do it.</h3>
+	<i>Eliminate unnecesary work.</i>
+      </li>
+      <li>
+	<div class="process step-2"></div>
+	<h3>Do it, but don't do it again.</h3>
+	<i>Caching.</i>
+      </li>
+      <li>
+	<div class="process step-3"></div>
+	<h3>Do it less.</h3>
+	<i>Tune refreshes, polling, or updates to be less frequent.</i>
+      </li>
+      <li>
+	<div class="process step-4"></div>
+	<h3>Do it later.</h3>
+	<i>Write-back caching.</i>
+      </li>
+      <li>
+	<div class="process step-5"></div>
+	<h3>Do it when they're not looking.</h3>
+	<i>Schedule work during off-peak hours.</i>
+      </li>
+      <li>
+	<div class="process step-6"></div>
+	<h3>Do it concurently.</h3>
+	<i>Switch from single-threaded to multi-threaded.</i>
+      </li>
+      <li>
+	<div class="process step-7"></div>
+	<h3>Do it more cheaply.</h3>
+	<i>Buy faster hardware.</i>
+      </li>
+    </ul>
+  </div>
+  <footer>
+    <p class="alignright">
+      <i>
+	Systems Performance: Enterprise and the Cloud, 2nd Edition
+      </i>
+      by Brendan Gregg
+    </p>
+  </footer>
+</section>
